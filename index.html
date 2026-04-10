@@ -6,52 +6,175 @@
 <title>Shoping with Psy</title>
 
 <style>
-body {font-family: Arial; background:#fdf6f0; margin:0;}
-nav {display:flex; justify-content:space-between; padding:1rem; background:white;}
-nav h1 {color:#e8aeb7;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
 
-.grid {display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; padding:20px;}
-.card {background:white; padding:10px; border-radius:10px; text-align:center;}
-.card img {width:100%; height:200px; object-fit:cover;}
-
-.btn {background:#e8aeb7; color:white; padding:8px; border:none; cursor:pointer;}
-
-.cart-btn {
-position:fixed;
-right:20px;
-bottom:20px;
-background:#e8aeb7;
-color:white;
-padding:15px;
-border-radius:50%;
-cursor:pointer;
+body{
+  background:#fdf6f0;
+  color:#333;
+  scroll-behavior:smooth;
 }
 
-.cart-box {
-position:fixed;
-right:-100%;
-top:0;
-width:300px;
-height:100%;
-background:white;
-box-shadow:-5px 0 10px rgba(0,0,0,0.2);
-padding:20px;
-transition:0.3s;
-overflow:auto;
+/* NAVBAR */
+nav{
+  display:flex;
+  justify-content:space-between;
+  padding:1rem 2rem;
+  background:#fff;
+  position:sticky;
+  top:0;
+  box-shadow:0 2px 10px rgba(0,0,0,0.05);
 }
 
-.cart-box.active {right:0;}
+nav h1{color:#e8aeb7;}
 
-.cart-item {margin-bottom:10px;}
+nav ul{
+  display:flex;
+  list-style:none;
+  gap:20px;
+}
 
-.checkout {
-background:#e8aeb7;
-color:white;
-padding:10px;
-width:100%;
-border:none;
-margin-top:10px;
-cursor:pointer;
+nav a{
+  text-decoration:none;
+  color:#555;
+  font-weight:bold;
+}
+
+/* HERO */
+.hero{
+  text-align:center;
+  padding:4rem 1rem;
+  background:linear-gradient(to right,#fff,#f7eae4,#ffe4ec);
+  animation:fadeIn 1.5s ease;
+}
+
+.hero h2{font-size:2.5rem;}
+.hero p{margin-top:10px;color:#777;}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* GRID */
+section{padding:2rem;}
+
+h2{text-align:center;margin-bottom:1.5rem;}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+}
+
+/* CARD */
+.card{
+  background:#fff;
+  padding:1rem;
+  border-radius:10px;
+  text-align:center;
+  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+  transition:0.3s;
+  position:relative;
+  overflow:hidden;
+}
+
+.card:hover{
+  transform:translateY(-10px) scale(1.04);
+}
+
+.card img{
+  width:100%;
+  height:260px;
+  object-fit:cover;
+  border-radius:10px;
+  transition:0.3s;
+}
+
+.card:hover img{
+  transform:scale(1.1);
+}
+
+.price{
+  color:#e8aeb7;
+  font-weight:bold;
+  margin:10px 0;
+}
+
+.btn{
+  padding:8px 15px;
+  background:#e8aeb7;
+  border:none;
+  color:white;
+  border-radius:5px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.btn:hover{
+  background:#d98f9c;
+  transform:scale(1.05);
+}
+
+.badge{
+  position:absolute;
+  top:10px;
+  left:10px;
+  background:#ff7b9c;
+  color:white;
+  padding:5px 10px;
+  font-size:12px;
+  border-radius:5px;
+}
+
+/* CART BUTTON */
+.cart-btn{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  background:#e8aeb7;
+  color:white;
+  padding:15px;
+  border-radius:50%;
+  cursor:pointer;
+}
+
+/* CART PANEL */
+.cart-box{
+  position:fixed;
+  right:-100%;
+  top:0;
+  width:300px;
+  height:100%;
+  background:white;
+  box-shadow:-5px 0 10px rgba(0,0,0,0.2);
+  padding:20px;
+  transition:0.3s;
+  overflow:auto;
+}
+
+.cart-box.active{
+  right:0;
+}
+
+.cart-item{
+  margin-bottom:10px;
+}
+
+.checkout{
+  background:#e8aeb7;
+  color:white;
+  padding:10px;
+  width:100%;
+  border:none;
+  margin-top:10px;
+  cursor:pointer;
+}
+
+footer{
+  text-align:center;
+  padding:1rem;
+  background:#fff;
+  margin-top:2rem;
 }
 </style>
 </head>
@@ -59,40 +182,69 @@ cursor:pointer;
 <body>
 
 <nav>
-<h1>Shoping with Psy</h1>
+  <h1>Shoping with Psy</h1>
+  <ul>
+    <li><a href="#men">Men</a></li>
+    <li><a href="#women">Women</a></li>
+    <li><a href="#children">Children</a></li>
+  </ul>
 </nav>
+
+<section class="hero">
+  <h2>Summer Collection ☀️</h2>
+  <p>Trendy outfits for your summer vibe</p>
+</section>
+
+<!-- MEN -->
+<section id="men">
+<h2>Men Collection</h2>
 
 <div class="grid">
 
 <div class="card">
+<span class="badge">HOT</span>
 <img src="Screenshot%202026-04-10%20210316.png">
-<h3>Korean Pants</h3>
-<p>₹1500</p>
-<button class="btn" onclick="addToCart('Korean Pants',1500)">Add</button>
+<h3>Korean Pants Black</h3>
+<p class="price">₹1500</p>
+<button class="btn" onclick="addToCart('Korean Pants Black',1500)">Add to Cart</button>
 </div>
 
 <div class="card">
 <img src="Screenshot%202026-04-10%20210333.png">
 <h3>Korean Pants Beige</h3>
-<p>₹1500</p>
-<button class="btn" onclick="addToCart('Korean Pants Beige',1500)">Add</button>
+<p class="price">₹1500</p>
+<button class="btn" onclick="addToCart('Korean Pants Beige',1500)">Add to Cart</button>
 </div>
 
 <div class="card">
+<span class="badge">SALE</span>
 <img src="Screenshot%202026-04-10%20210403.png">
-<h3>Jeans</h3>
-<p>₹2000</p>
-<button class="btn" onclick="addToCart('Jeans',2000)">Add</button>
+<h3>Loose Fit Jeans</h3>
+<p class="price">₹2000</p>
+<button class="btn" onclick="addToCart('Jeans',2000)">Add to Cart</button>
 </div>
 
 <div class="card">
 <img src="Screenshot%202026-04-10%20210423.png">
-<h3>Shirt</h3>
-<p>₹300</p>
-<button class="btn" onclick="addToCart('Shirt',300)">Add</button>
+<h3>Casual Shirt</h3>
+<p class="price">₹300</p>
+<button class="btn" onclick="addToCart('Shirt',300)">Add to Cart</button>
 </div>
 
 </div>
+</section>
+
+<!-- WOMEN -->
+<section id="women">
+<h2>Women Collection</h2>
+<p style="text-align:center;">Coming Soon 👗</p>
+</section>
+
+<!-- CHILDREN -->
+<section id="children">
+<h2>Children Collection</h2>
+<p style="text-align:center;">Coming Soon 🧸</p>
+</section>
 
 <div class="cart-btn" onclick="toggleCart()">🛒</div>
 
@@ -102,6 +254,10 @@ cursor:pointer;
 <h3 id="total">Total: ₹0</h3>
 <button class="checkout" onclick="checkout()">Checkout</button>
 </div>
+
+<footer>
+<p>© 2026 Shoping with Psy</p>
+</footer>
 
 <script>
 let cart = [];
