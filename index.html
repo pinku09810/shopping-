@@ -16,6 +16,7 @@
     body {
       background: #fdf6f0;
       color: #333;
+      scroll-behavior: smooth;
     }
 
     nav {
@@ -27,6 +28,7 @@
       position: sticky;
       top: 0;
       box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      z-index: 1000;
     }
 
     nav h1 {
@@ -43,6 +45,7 @@
       text-decoration: none;
       color: #555;
       font-weight: bold;
+      transition: 0.3s;
     }
 
     nav ul li a:hover {
@@ -51,24 +54,30 @@
 
     .hero {
       text-align: center;
-      padding: 3rem 1rem;
+      padding: 4rem 1rem;
       background: linear-gradient(to right, #fff, #f7eae4, #ffe4ec);
+      animation: fadeIn 1.5s ease-in;
     }
 
     .hero h2 {
       font-size: 2.5rem;
-      margin-bottom: 10px;
     }
 
     .hero p {
+      margin-top: 10px;
       color: #777;
     }
 
-    .products {
+    @keyframes fadeIn {
+      from {opacity:0; transform: translateY(20px);}
+      to {opacity:1; transform: translateY(0);}
+    }
+
+    section {
       padding: 2rem;
     }
 
-    .products h2 {
+    h2 {
       text-align: center;
       margin-bottom: 1.5rem;
     }
@@ -86,10 +95,12 @@
       text-align: center;
       box-shadow: 0 2px 10px rgba(0,0,0,0.05);
       transition: 0.3s;
+      position: relative;
+      overflow: hidden;
     }
 
     .card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-8px) scale(1.03);
     }
 
     .card img {
@@ -99,15 +110,10 @@
       border-radius: 10px;
     }
 
-    .card h3 {
-      margin: 10px 0;
-      font-size: 1.1rem;
-    }
-
     .price {
       color: #e8aeb7;
       font-weight: bold;
-      margin-bottom: 10px;
+      margin: 10px 0;
     }
 
     .btn {
@@ -121,6 +127,29 @@
 
     .btn:hover {
       background: #d98f9c;
+    }
+
+    .badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #ff7b9c;
+      color: white;
+      padding: 5px 10px;
+      font-size: 12px;
+      border-radius: 5px;
+    }
+
+    .cart {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #e8aeb7;
+      color: white;
+      padding: 15px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: bold;
     }
 
     footer {
@@ -143,59 +172,93 @@
   <nav>
     <h1>Shoping with Psy</h1>
     <ul>
-      <li><a href="#">Men</a></li>
-      <li><a href="#">Women</a></li>
-      <li><a href="#">Children</a></li>
+      <li><a href="#men">Men</a></li>
+      <li><a href="#women">Women</a></li>
+      <li><a href="#children">Children</a></li>
     </ul>
   </nav>
 
   <section class="hero">
     <h2>Summer Collection ☀️</h2>
-    <p>Upgrade your style with trending outfits</p>
+    <p>Trendy outfits for your summer vibe</p>
   </section>
 
-  <section class="products">
+  <!-- MEN -->
+  <section id="men">
     <h2>Men Collection</h2>
-
     <div class="grid">
 
       <div class="card">
+        <span class="badge">HOT</span>
         <img src="Screenshot%202026-04-10%20210316.png">
-
-        <h3>Korean Fit Pants (Black)</h3>
+        <h3>Korean Pants Black</h3>
         <p class="price">₹1500</p>
-        <button class="btn">Add to Cart</button>
+        <button class="btn" onclick="addToCart('Korean Pants',1500)">Add to Cart</button>
       </div>
 
       <div class="card">
-        
-<img src="Screenshot%202026-04-10%20210333.png">
-
+        <img src="Screenshot%202026-04-10%20210333.png">
+        <h3>Korean Pants Beige</h3>
         <p class="price">₹1500</p>
-        <button class="btn">Add to Cart</button>
+        <button class="btn" onclick="addToCart('Korean Pants Beige',1500)">Add to Cart</button>
       </div>
 
       <div class="card">
-        
-<img src="Screenshot%202026-04-10%20210403.png">
+        <span class="badge">SALE</span>
+        <img src="Screenshot%202026-04-10%20210403.png">
         <h3>Loose Fit Jeans</h3>
         <p class="price">₹2000</p>
-        <button class="btn">Add to Cart</button>
+        <button class="btn" onclick="addToCart('Jeans',2000)">Add to Cart</button>
       </div>
 
       <div class="card">
-       <img src="Screenshot%202026-04-10%20210423.png">
-        <h3>Casual Summer Shirt</h3>
+        <img src="Screenshot%202026-04-10%20210423.png">
+        <h3>Casual Shirt</h3>
         <p class="price">₹300</p>
-        <button class="btn">Add to Cart</button>
+        <button class="btn" onclick="addToCart('Shirt',300)">Add to Cart</button>
       </div>
 
     </div>
   </section>
 
+  <!-- WOMEN -->
+  <section id="women">
+    <h2>Women Collection</h2>
+    <p style="text-align:center;">Coming Soon 👗</p>
+  </section>
+
+  <!-- CHILDREN -->
+  <section id="children">
+    <h2>Children Collection</h2>
+    <p style="text-align:center;">Coming Soon 🧸</p>
+  </section>
+
+  <div class="cart" onclick="showCart()">🛒</div>
+
   <footer>
     <p>© 2026 Shoping with Psy</p>
   </footer>
+
+  <script>
+    let cart = [];
+
+    function addToCart(name, price) {
+      cart.push({name, price});
+      alert(name + " added to cart!");
+    }
+
+    function showCart() {
+      let total = 0;
+      let items = "";
+
+      cart.forEach(item => {
+        total += item.price;
+        items += item.name + "\\n";
+      });
+
+      alert("Items:\\n" + items + "\\nTotal: ₹" + total);
+    }
+  </script>
 
 </body>
 </html>
