@@ -158,7 +158,26 @@
       background: #fff;
       margin-top: 2rem;
     }
+<div class="cart-box" id="cartBox">
+  <h2>Your Cart</h2>
+  <div id="cartItems"></div>
+  <h3 id="total">Total: ₹0</h3>
+  <button class="btn" onclick="openCheckout()">Proceed to Checkout</button>
+</div>
 
+<div class="checkout-box" id="checkoutBox">
+  <h2>Checkout</h2>
+
+  <input type="text" id="name" placeholder="Full Name"><br><br>
+  <input type="text" id="address" placeholder="Address"><br><br>
+  <input type="email" id="email" placeholder="Email"><br><br>
+  <input type="text" id="phone" placeholder="Phone Number"><br><br>
+
+  <h3>Payment Method</h3>
+  <p>Cash on Delivery 💵</p>
+
+  <button class="btn" onclick="placeOrder()">Place Order</button>
+</div>
     @media(max-width:600px) {
       .hero h2 {
         font-size: 1.8rem;
@@ -234,7 +253,26 @@
   </section>
 
   <div class="cart" onclick="showCart()">🛒</div>
+<div class="cart-box" id="cartBox">
+  <h2>Your Cart</h2>
+  <div id="cartItems"></div>
+  <h3 id="total">Total: ₹0</h3>
+  <button class="btn" onclick="openCheckout()">Proceed to Checkout</button>
+</div>
 
+<div class="checkout-box" id="checkoutBox">
+  <h2>Checkout</h2>
+
+  <input type="text" id="name" placeholder="Full Name"><br><br>
+  <input type="text" id="address" placeholder="Address"><br><br>
+  <input type="email" id="email" placeholder="Email"><br><br>
+  <input type="text" id="phone" placeholder="Phone Number"><br><br>
+
+  <h3>Payment Method</h3>
+  <p>Cash on Delivery 💵</p>
+
+  <button class="btn" onclick="placeOrder()">Place Order</button>
+</div>
   <footer>
     <p>© 2026 Shoping with Psy</p>
   </footer>
@@ -242,22 +280,58 @@
   <script>
     let cart = [];
 
-    function addToCart(name, price) {
-      cart.push({name, price});
-      alert(name + " added to cart!");
-    }
+function addToCart(name, price){
+  cart.push({name,price});
+  updateCart();
+}
 
-    function showCart() {
-      let total = 0;
-      let items = "";
+function updateCart(){
+  let itemsHTML = "";
+  let total = 0;
 
-      cart.forEach(item => {
-        total += item.price;
-        items += item.name + "\\n";
-      });
+  cart.forEach((item,index)=>{
+    total += item.price;
+    itemsHTML += `
+    <div>
+      ${item.name} - ₹${item.price}
+      <button onclick="removeItem(${index})">❌</button>
+    </div>`;
+  });
 
-      alert("Items:\\n" + items + "\\nTotal: ₹" + total);
-    }
+  document.getElementById("cartItems").innerHTML = itemsHTML;
+  document.getElementById("total").innerText = "Total: ₹" + total;
+}
+
+function removeItem(index){
+  cart.splice(index,1);
+  updateCart();
+}
+
+function showCart(){
+  document.getElementById("cartBox").classList.toggle("active");
+}
+
+function openCheckout(){
+  document.getElementById("checkoutBox").style.display = "block";
+}
+
+function placeOrder(){
+  let name = document.getElementById("name").value;
+  let address = document.getElementById("address").value;
+  let email = document.getElementById("email").value;
+  let phone = document.getElementById("phone").value;
+
+  if(name=="" || address=="" || email=="" || phone==""){
+    alert("Please fill all details 😅");
+    return;
+  }
+
+  alert("Order Placed Successfully 🎉\nPayment: Cash on Delivery");
+
+  cart = [];
+  updateCart();
+  document.getElementById("checkoutBox").style.display = "none";
+}
   </script>
 
 
