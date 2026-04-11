@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Checkout</title>
+</head>
+<body>
+
+<h2>Checkout</h2>
+
+<input id="name" placeholder="Name"><br><br>
+<input id="address" placeholder="Address"><br><br>
+<input id="email" placeholder="Email"><br><br>
+<input id="phone" placeholder="Phone"><br><br>
+
+<button onclick="placeOrder()">Place Order (COD)</button>
+
+<script>
+function placeOrder(){
+  let name = document.getElementById("name").value;
+  let address = document.getElementById("address").value;
+  let email = document.getElementById("email").value;
+  let phone = document.getElementById("phone").value;
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  let total = 0;
+  let itemsText = "";
+
+  cart.forEach(item=>{
+    total += item.price;
+    itemsText += item.name + " - ₹" + item.price + "%0A";
+  });
+
+  let msg = 
+  "🛒 Order%0A" +
+  "Name: " + name + "%0A" +
+  "Address: " + address + "%0A" +
+  "Phone: " + phone + "%0A%0A" +
+  itemsText +
+  "Total: ₹" + total;
+
+  let url = "https://wa.me/91XXXXXXXXXX?text=" + msg;
+
+  window.open(url);
+
+  localStorage.removeItem("cart");
+}
+</script>
+
+</body>
+</html>
